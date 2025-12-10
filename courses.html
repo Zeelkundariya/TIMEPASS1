@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | LearnSmart AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --success: #4ade80;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8f9fa;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-to-dashboard {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .back-to-dashboard:hover {
+            background: rgba(67, 97, 238, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Courses Container */
+        .courses-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .courses-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .courses-header h2 {
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 2rem;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-card-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .course-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .course-card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .course-level {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .level-beginner {
+            background: rgba(74, 222, 128, 0.2);
+            color: #16a34a;
+        }
+
+        .level-intermediate {
+            background: rgba(250, 204, 21, 0.2);
+            color: #ca8a04;
+        }
+
+        .level-advanced {
+            background: rgba(239, 68, 68, 0.2);
+            color: #dc2626;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            transition: transform 0.5s ease;
+        }
+
+        .video-placeholder:hover .video-thumbnail {
+            transform: scale(1.1);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .video-placeholder:hover .video-overlay {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .play-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            z-index: 3;
+            transition: transform 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .video-placeholder:hover .play-icon {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+
+        .video-placeholder p {
+            z-index: 3;
+            font-weight: 500;
+            text-align: center;
+            padding: 0 10px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .completion-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--success);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-status {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            z-index: 3;
+        }
+
+        .course-description {
+            margin: 15px 0;
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .course-stats {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .course-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Progress Bar */
+        .course-progress {
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Video Modal */
+        .video-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .video-modal-content {
+            width: 90%;
+            max-width: 1000px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-modal-header {
+            padding: 15px 20px;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-modal-body {
+            height: 500px;
+            position: relative;
+            background: #000;
+        }
+
+        .video-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        .video-modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .video-modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .video-control-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .video-control-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #22c55e;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .courses-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .video-modal-body {
+                height: 300px;
+            }
+            
+            .video-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .video-control-btn {
+                justify-content: center;
+            }
+            
+            .course-stats {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .courses-container {
+                padding: 20px;
+            }
+            
+            .course-card-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .video-modal-content {
+                width: 95%;
+            }
+        }
+
+        /* Feedback Notification */
+        .feedback-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 10001;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light-gray);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>LearnSmart AI</span>
+                </a>
+                
+                <a href="index.html" class="back-to-dashboard">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </header>
+
+        <!-- Courses Container -->
+        <div class="courses-container">
+            <div class="courses-header">
+                <h2><i class="fas fa-graduation-cap"></i> My Courses</h2>
+                <div>
+                    <button class="btn btn-primary" id="enrollNewBtn">
+                        <i class="fas fa-plus"></i> Enroll in New Course
+                    </button>
+                </div>
+            </div>
+
+            <p>Continue your learning journey with these personalized courses. Each course includes video lessons, assignments, and assessments.</p>
+
+            <div class="courses-grid" id="coursesGrid">
+                <!-- JavaScript Course -->
+                <div class="course-card">
+                    <div class="course-card-header">
+                        <div class="course-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
+                        <div>
+                            <h3>JavaScript Mastery</h3>
+                            <p>Modern JavaScript from Basics to Advanced</p>
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-level level-intermediate">Intermediate</span>
+                            <span><i class="far fa-clock"></i> 8 hours</span>
+                        </div>
+
+                        <div class="video-container" id="jsVideoContainer">
+                            <div class="video-placeholder" data-video="jsVideo">
+                                <img src="https://img.youtube.com/vi/ajdRvxDWH4w/maxresdefault.jpg" alt="JavaScript Tutorial" class="video-thumbnail">
+                                <div class="video-overlay">
+                                    <i class="fas fa-play-circle play-icon"></i>
+                                    <p>Click to play JavaScript Tutorial</p>
+                                </div>
+                                
+                                <!-- Completion Badge -->
+                                <div class="completion-badge" id="jsCompletionBadge" style="display: none;">
+                                    100% Complete
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-description">
+                            Learn modern JavaScript ES6+, DOM manipulation, async programming, and build real-world projects.
+                        </div>
+
+                        <div class="progress-indicator">
+                            <span id="jsCompletionStat">0% completed</span>
+                            <span id="jsTimeWatched">0 min watched</span>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress" id="jsCourseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats">
+                            <div class="course-stat">
+                                <i class="fas fa-video"></i>
+                                <span>12 video lessons</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-tasks"></i>
+                                <span>5 projects</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.8 rating</span>
+                            </div>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="btn btn-primary btn-sm btn-block continue-btn" data-course="javascript" data-video="jsVideo">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python Course -->
+                <div class="course-card">
+                    <div class="course-card-header">
+                        <div class="course-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div>
+                            <h3>Python Programming</h3>
+                            <p>Data Science & Automation with Python</p>
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-level level-beginner">Beginner</span>
+                            <span><i class="far fa-clock"></i> 12 hours</span>
+                        </div>
+
+                        <div class="video-container" id="pythonVideoContainer">
+                            <div class="video-placeholder" data-video="pythonVideo">
+                                <img src="https://img.youtube.com/vi/UrsmFxEIp5k/maxresdefault.jpg" alt="Python Tutorial" class="video-thumbnail">
+                                <div class="video-overlay">
+                                    <i class="fas fa-play-circle play-icon"></i>
+                                    <p>Click to play Python Tutorial</p>
+                                </div>
+                                
+                                <!-- Completion Badge -->
+                                <div class="completion-badge" id="pythonCompletionBadge" style="display: none;">
+                                    100% Complete
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-description">
+                            Master Python fundamentals, data structures, libraries like NumPy & Pandas, and automate tasks.
+                        </div>
+
+                        <div class="progress-indicator">
+                            <span id="pythonCompletionStat">0% completed</span>
+                            <span id="pythonTimeWatched">0 min watched</span>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress" id="pythonCourseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats">
+                            <div class="course-stat">
+                                <i class="fas fa-video"></i>
+                                <span>15 video lessons</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-tasks"></i>
+                                <span>8 exercises</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.9 rating</span>
+                            </div>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="btn btn-primary btn-sm btn-block continue-btn" data-course="python" data-video="pythonVideo">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HTML & CSS Course -->
+                <div class="course-card">
+                    <div class="course-card-header">
+                        <div class="course-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                        <div>
+                            <h3>HTML & CSS Fundamentals</h3>
+                            <p>Build Beautiful, Responsive Websites</p>
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-level level-beginner">Beginner</span>
+                            <span><i class="far fa-clock"></i> 6 hours</span>
+                        </div>
+
+                        <div class="video-container" id="htmlVideoContainer">
+                            <div class="video-placeholder" data-video="htmlVideo">
+                                <img src="https://img.youtube.com/vi/HBqWsrqK89U/maxresdefault.jpg" alt="HTML/CSS Tutorial" class="video-thumbnail">
+                                <div class="video-overlay">
+                                    <i class="fas fa-play-circle play-icon"></i>
+                                    <p>Click to play HTML/CSS Tutorial</p>
+                                </div>
+                                
+                                <!-- Completion Badge -->
+                                <div class="completion-badge" id="htmlCompletionBadge" style="display: none;">
+                                    100% Complete
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-description">
+                            Learn semantic HTML, modern CSS with Flexbox & Grid, and responsive design principles.
+                        </div>
+
+                        <div class="progress-indicator">
+                            <span id="htmlCompletionStat">0% completed</span>
+                            <span id="htmlTimeWatched">0 min watched</span>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress" id="htmlCourseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats">
+                            <div class="course-stat">
+                                <i class="fas fa-video"></i>
+                                <span>10 video lessons</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-tasks"></i>
+                                <span>3 projects</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.7 rating</span>
+                            </div>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="btn btn-primary btn-sm btn-block continue-btn" data-course="html" data-video="htmlVideo">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- React Course -->
+                <div class="course-card">
+                    <div class="course-card-header">
+                        <div class="course-icon">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <div>
+                            <h3>React Development</h3>
+                            <p>Build Modern Web Applications</p>
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-level level-intermediate">Intermediate</span>
+                            <span><i class="far fa-clock"></i> 14 hours</span>
+                        </div>
+
+                        <div class="video-container" id="reactVideoContainer">
+                            <div class="video-placeholder" data-video="reactVideo">
+                                <img src="https://img.youtube.com/vi/FxgM9k1rg0Q/maxresdefault.jpg" alt="React Tutorial" class="video-thumbnail">
+                                <div class="video-overlay">
+                                    <i class="fas fa-play-circle play-icon"></i>
+                                    <p>Click to play React Tutorial</p>
+                                </div>
+                                
+                                <!-- Completion Badge -->
+                                <div class="completion-badge" id="reactCompletionBadge" style="display: none;">
+                                    100% Complete
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-description">
+                            Learn React hooks, state management, routing, and build full-stack applications.
+                        </div>
+
+                        <div class="progress-indicator">
+                            <span id="reactCompletionStat">0% completed</span>
+                            <span id="reactTimeWatched">0 min watched</span>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress" id="reactCourseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats">
+                            <div class="course-stat">
+                                <i class="fas fa-video"></i>
+                                <span>18 video lessons</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-tasks"></i>
+                                <span>4 projects</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.8 rating</span>
+                            </div>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="btn btn-primary btn-sm btn-block continue-btn" data-course="react" data-video="reactVideo">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Algorithms Course -->
+                <div class="course-card">
+                    <div class="course-card-header">
+                        <div class="course-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <div>
+                            <h3>Algorithms & Complexity</h3>
+                            <p>Master Problem Solving Techniques</p>
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-level level-advanced">Advanced</span>
+                            <span><i class="far fa-clock"></i> 15 hours</span>
+                        </div>
+
+                        <div class="video-container" id="algoVideoContainer">
+                            <div class="video-placeholder" data-video="algoVideo">
+                                <img src="https://img.youtube.com/vi/u8JZ9gU5o4g/maxresdefault.jpg" alt="Algorithms Tutorial" class="video-thumbnail">
+                                <div class="video-overlay">
+                                    <i class="fas fa-play-circle play-icon"></i>
+                                    <p>Click to play Algorithms Tutorial</p>
+                                </div>
+                                
+                                <!-- Completion Badge -->
+                                <div class="completion-badge" id="algoCompletionBadge" style="display: none;">
+                                    100% Complete
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-description">
+                            Deep dive into sorting, searching, dynamic programming, and time/space complexity analysis.
+                        </div>
+
+                        <div class="progress-indicator">
+                            <span id="algoCompletionStat">0% completed</span>
+                            <span id="algoTimeWatched">0 min watched</span>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress" id="algoCourseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats">
+                            <div class="course-stat">
+                                <i class="fas fa-video"></i>
+                                <span>20 video lessons</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-tasks"></i>
+                                <span>50+ problems</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.9 rating</span>
+                            </div>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="btn btn-primary btn-sm btn-block continue-btn" data-course="algorithms" data-video="algoVideo">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Structures Course -->
+                <div class="course-card">
+                    <div class="course-card-header">
+                        <div class="course-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div>
+                            <h3>Data Structures</h3>
+                            <p>Master Linked Lists, Trees, Graphs & More</p>
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-level level-intermediate">Intermediate</span>
+                            <span><i class="far fa-clock"></i> 10 hours</span>
+                        </div>
+
+                        <div class="video-container" id="dsVideoContainer">
+                            <div class="video-placeholder" data-video="dsVideo">
+                                <img src="https://img.youtube.com/vi/VTLCoHnyACE/maxresdefault.jpg" alt="Data Structures Tutorial" class="video-thumbnail">
+                                <div class="video-overlay">
+                                    <i class="fas fa-play-circle play-icon"></i>
+                                    <p>Click to play Data Structures Tutorial</p>
+                                </div>
+                                
+                                <!-- Completion Badge -->
+                                <div class="completion-badge" id="dsCompletionBadge" style="display: none;">
+                                    100% Complete
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-description">
+                            Understand arrays, stacks, queues, trees, graphs, and their real-world applications.
+                        </div>
+
+                        <div class="progress-indicator">
+                            <span id="dsCompletionStat">0% completed</span>
+                            <span id="dsTimeWatched">0 min watched</span>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress" id="dsCourseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats">
+                            <div class="course-stat">
+                                <i class="fas fa-video"></i>
+                                <span>14 video lessons</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-tasks"></i>
+                                <span>30 exercises</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.6 rating</span>
+                            </div>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="btn btn-primary btn-sm btn-block continue-btn" data-course="datastructures" data-video="dsVideo">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C Language Course -->
+                <div class="course-card">
+                    <div class="course-card-header">
+                        <div class="course-icon">
+                            <i class="fas fa-c"></i>
+                        </div>
+                        <div>
+                            <h3>C Programming</h3>
+                            <p>Fundamentals of Systems Programming</p>
+                        </div>
+                    </div>
+                    <div class="course-card-body">
+                        <div class="course-meta">
+                            <span class="course-level level-intermediate">Intermediate</span>
+                            <span><i class="far fa-clock"></i> 16 hours</span>
+                        </div>
+
+                        <div class="video-container" id="cVideoContainer">
+                            <div class="video-placeholder" data-video="cVideo">
+                                <img src="https://img.youtube.com/vi/irqbmMNs2Bo/maxresdefault.jpg" alt="C Programming Tutorial" class="video-thumbnail">
+                                <div class="video-overlay">
+                                    <i class="fas fa-play-circle play-icon"></i>
+                                    <p>Click to play C Programming Tutorial</p>
+                                </div>
+                                
+                                <!-- Completion Badge -->
+                                <div class="completion-badge" id="cCompletionBadge" style="display: none;">
+                                    100% Complete
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-description">
+                            Master pointers, memory management, file handling, and low-level programming concepts.
+                        </div>
+
+                        <div class="progress-indicator">
+                            <span id="cCompletionStat">0% completed</span>
+                            <span id="cTimeWatched">0 min watched</span>
+                        </div>
+
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress" id="cCourseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="course-stats">
+                            <div class="course-stat">
+                                <i class="fas fa-video"></i>
+                                <span>22 video lessons</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-tasks"></i>
+                                <span>25 exercises</span>
+                            </div>
+                            <div class="course-stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.7 rating</span>
+                            </div>
+                        </div>
+
+                        <div class="course-actions">
+                            <button class="btn btn-primary btn-sm btn-block continue-btn" data-course="c" data-video="cVideo">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal-overlay" id="videoModal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h3 id="videoModalTitle">Course Video</h3>
+                <button class="video-modal-close" id="closeVideoModal">&times;</button>
+            </div>
+            <div class="video-modal-body" id="videoModalBody">
+                <!-- YouTube iframe will be inserted here -->
+            </div>
+            <div class="video-controls">
+                <button class="video-control-btn" id="addProgressBtn">
+                    <i class="fas fa-plus"></i> Add 1 Minute Progress
+                </button>
+                <button class="video-control-btn btn-success" id="markCompleteBtn">
+                    <i class="fas fa-check"></i> Mark as Complete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Video data with YouTube links and progress tracking
+        const videoData = {
+            jsVideo: {
+                title: "JavaScript Mastery Tutorial",
+                embedUrl: "https://www.youtube.com/embed/ajdRvxDWH4w",
+                thumbnail: "https://img.youtube.com/vi/ajdRvxDWH4w/maxresdefault.jpg",
+                duration: 720, // 12 minutes in seconds
+                watched: 0,
+                completed: false
+            },
+            pythonVideo: {
+                title: "Python Programming Tutorial",
+                embedUrl: "https://www.youtube.com/embed/UrsmFxEIp5k",
+                thumbnail: "https://img.youtube.com/vi/UrsmFxEIp5k/maxresdefault.jpg",
+                duration: 600, // 10 minutes
+                watched: 0,
+                completed: false
+            },
+            htmlVideo: {
+                title: "HTML & CSS Complete Course",
+                embedUrl: "https://www.youtube.com/embed/HBqWsrqK89U",
+                thumbnail: "https://img.youtube.com/vi/HBqWsrqK89U/maxresdefault.jpg",
+                duration: 900, // 15 minutes
+                watched: 0,
+                completed: false
+            },
+            reactVideo: {
+                title: "React Development Course",
+                embedUrl: "https://www.youtube.com/embed/FxgM9k1rg0Q",
+                thumbnail: "https://img.youtube.com/vi/FxgM9k1rg0Q/maxresdefault.jpg",
+                duration: 960, // 16 minutes
+                watched: 0,
+                completed: false
+            },
+            algoVideo: {
+                title: "Algorithms Explained",
+                embedUrl: "https://www.youtube.com/embed/u8JZ9gU5o4g",
+                thumbnail: "https://img.youtube.com/vi/u8JZ9gU5o4g/maxresdefault.jpg",
+                duration: 1080, // 18 minutes
+                watched: 0,
+                completed: false
+            },
+            dsVideo: {
+                title: "Data Structures Tutorial",
+                embedUrl: "https://www.youtube.com/embed/VTLCoHnyACE",
+                thumbnail: "https://img.youtube.com/vi/VTLCoHnyACE/maxresdefault.jpg",
+                duration: 840, // 14 minutes
+                watched: 0,
+                completed: false
+            },
+            cVideo: {
+                title: "C Programming Complete Guide",
+                embedUrl: "https://www.youtube.com/embed/irqbmMNs2Bo",
+                thumbnail: "https://img.youtube.com/vi/irqbmMNs2Bo/maxresdefault.jpg",
+                duration: 780, // 13 minutes
+                watched: 0,
+                completed: false
+            }
+        };
+
+        // DOM Elements
+        const videoModal = document.getElementById('videoModal');
+        const videoModalBody = document.getElementById('videoModalBody');
+        const videoModalTitle = document.getElementById('videoModalTitle');
+        const closeVideoModal = document.getElementById('closeVideoModal');
+        const addProgressBtn = document.getElementById('addProgressBtn');
+        const markCompleteBtn = document.getElementById('markCompleteBtn');
+        const enrollNewBtn = document.getElementById('enrollNewBtn');
+
+        // Current video being played
+        let currentVideoId = null;
+        let videoProgressInterval = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function () {
+            // Load saved progress from localStorage
+            loadVideoProgress();
+            
+            // Setup video players
+            setupVideoPlayers();
+
+            // Setup continue buttons
+            setupContinueButtons();
+
+            // Setup video modal
+            setupVideoModal();
+
+            // Initialize video progress displays
+            updateAllVideoProgressDisplays();
+
+            // Setup enroll new course button
+            enrollNewBtn.addEventListener('click', function() {
+                showNotification('Browse all available courses. Coming soon!', 'info');
+            });
+            
+            console.log("My Courses page initialized!");
+        });
+
+        function loadVideoProgress() {
+            try {
+                const savedProgress = localStorage.getItem('videoProgress');
+                if (savedProgress) {
+                    const progress = JSON.parse(savedProgress);
+                    Object.keys(progress).forEach(videoId => {
+                        if (videoData[videoId]) {
+                            videoData[videoId].watched = progress[videoId].watched || 0;
+                            videoData[videoId].completed = progress[videoId].completed || false;
+                        }
+                    });
+                    console.log("Loaded video progress from localStorage");
+                } else {
+                    console.log("No saved progress found, starting fresh");
+                }
+            } catch (e) {
+                console.error("Error loading video progress:", e);
+            }
+        }
+
+        function saveVideoProgress() {
+            try {
+                const progress = {};
+                Object.keys(videoData).forEach(videoId => {
+                    progress[videoId] = {
+                        watched: videoData[videoId].watched,
+                        completed: videoData[videoId].completed
+                    };
+                });
+                localStorage.setItem('videoProgress', JSON.stringify(progress));
+                console.log("Saved video progress to localStorage");
+            } catch (e) {
+                console.error("Error saving video progress:", e);
+            }
+        }
+
+        function setupVideoPlayers() {
+            // Setup click handlers for all video placeholders
+            const videoPlaceholders = document.querySelectorAll('.video-placeholder');
+            videoPlaceholders.forEach(placeholder => {
+                placeholder.addEventListener('click', function() {
+                    const videoId = this.getAttribute('data-video');
+                    console.log("Opening video:", videoId);
+                    openVideoModal(videoId);
+                });
+            });
+        }
+
+        function setupContinueButtons() {
+            // Setup continue buttons
+            const continueButtons = document.querySelectorAll('.continue-btn');
+            continueButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const videoId = this.getAttribute('data-video');
+                    console.log("Continue button clicked for video:", videoId);
+                    openVideoModal(videoId);
+                });
+            });
+        }
+
+        function setupVideoModal() {
+            // Close modal button
+            closeVideoModal.addEventListener('click', closeVideoModalFunc);
+
+            // Add progress button
+            addProgressBtn.addEventListener('click', addVideoProgress);
+
+            // Mark complete button
+            markCompleteBtn.addEventListener('click', markVideoComplete);
+
+            // Click outside to close
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    closeVideoModalFunc();
+                }
+            });
+
+            // Escape key to close
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && videoModal.style.display === 'flex') {
+                    closeVideoModalFunc();
+                }
+            });
+        }
+
+        function openVideoModal(videoId) {
+            if (!videoData[videoId]) {
+                console.error("Video not found:", videoId);
+                return;
+            }
+
+            const videoInfo = videoData[videoId];
+            currentVideoId = videoId;
+
+            // Update modal title
+            videoModalTitle.textContent = videoInfo.title;
+
+            // Calculate start time based on progress
+            const startTime = videoInfo.watched;
+            const percentage = Math.round((startTime / videoInfo.duration) * 100);
+
+            console.log(`Opening video ${videoId}: watched ${startTime}s (${percentage}%), starting at ${Math.floor(startTime)}s`);
+
+            // Create YouTube iframe with start time
+            const iframe = document.createElement('iframe');
+            iframe.src = `${videoInfo.embedUrl}?autoplay=1&rel=0&modestbranding=1&controls=1&showinfo=0&start=${Math.floor(startTime)}`;
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            iframe.title = videoInfo.title;
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.frameBorder = "0";
+            iframe.id = "youtubePlayer";
+
+            // Clear previous content and add new iframe
+            videoModalBody.innerHTML = '';
+            videoModalBody.appendChild(iframe);
+
+            // Show modal
+            videoModal.style.display = 'flex';
+
+            // Start simulated progress tracking
+            startSimulatedProgressTracking();
+        }
+
+        function startSimulatedProgressTracking() {
+            // Clear any existing interval
+            if (videoProgressInterval) {
+                clearInterval(videoProgressInterval);
+            }
+            
+            // Simulate progress every 10 seconds for testing
+            videoProgressInterval = setInterval(() => {
+                if (currentVideoId && videoData[currentVideoId]) {
+                    const video = videoData[currentVideoId];
+                    if (!video.completed) {
+                        // Add 10 seconds of progress
+                        const oldWatched = video.watched;
+                        video.watched = Math.min(video.watched + 10, video.duration);
+                        
+                        console.log(`Simulating progress: ${oldWatched}s -> ${video.watched}s`);
+                        
+                        // Check if completed
+                        if (video.watched >= video.duration) {
+                            video.completed = true;
+                            console.log("Video completed!");
+                            showNotification('Congratulations! You have completed this video!', 'success');
+                        }
+                        
+                        // Save progress
+                        saveVideoProgress();
+                        updateVideoProgressDisplay(currentVideoId);
+                    }
+                }
+            }, 10000); // Every 10 seconds for testing
+        }
+
+        function addVideoProgress() {
+            if (!currentVideoId || !videoData[currentVideoId]) {
+                showNotification("No video selected!", 'error');
+                return;
+            }
+            
+            const video = videoData[currentVideoId];
+            if (!video.completed) {
+                // Add 60 seconds (1 minute) of progress
+                const oldWatched = video.watched;
+                video.watched = Math.min(video.watched + 60, video.duration);
+                
+                console.log(`Added 1 minute: ${oldWatched}s -> ${video.watched}s`);
+                
+                // Check if completed
+                if (video.watched >= video.duration) {
+                    video.completed = true;
+                    console.log("Video completed!");
+                    showNotification('Congratulations! You have completed this video!', 'success');
+                } else {
+                    showNotification('Added 1 minute of progress!', 'success');
+                }
+                
+                // Save and update
+                saveVideoProgress();
+                updateVideoProgressDisplay(currentVideoId);
+            } else {
+                showNotification('Video is already completed!', 'info');
+            }
+        }
+
+        function markVideoComplete() {
+            if (!currentVideoId || !videoData[currentVideoId]) {
+                showNotification("No video selected!", 'error');
+                return;
+            }
+            
+            const video = videoData[currentVideoId];
+            if (!video.completed) {
+                if (confirm('Mark this video as complete? This will set your progress to 100%.')) {
+                    video.watched = video.duration;
+                    video.completed = true;
+                    
+                    console.log(`Marked video as complete: ${currentVideoId}`);
+                    
+                    // Save and update
+                    saveVideoProgress();
+                    updateVideoProgressDisplay(currentVideoId);
+                    
+                    // Show feedback
+                    showNotification('Video marked as complete!', 'success');
+                }
+            } else {
+                showNotification('Video is already marked as complete!', 'info');
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'feedback-notification';
+            
+            let icon = 'fas fa-check-circle';
+            if (type === 'error') icon = 'fas fa-exclamation-circle';
+            if (type === 'info') icon = 'fas fa-info-circle';
+            
+            notification.innerHTML = `
+                <i class="${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after animation
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function closeVideoModalFunc() {
+            console.log("Closing video modal");
+            
+            // Clear progress tracking interval
+            if (videoProgressInterval) {
+                clearInterval(videoProgressInterval);
+                videoProgressInterval = null;
+            }
+            
+            // Save progress
+            saveVideoProgress();
+            
+            // Update progress displays
+            updateAllVideoProgressDisplays();
+            
+            // Hide modal
+            videoModal.style.display = 'none';
+            
+            // Clear iframe to stop video
+            const iframe = document.getElementById('youtubePlayer');
+            if (iframe) {
+                iframe.src = '';
+            }
+            
+            videoModalBody.innerHTML = '';
+            currentVideoId = null;
+        }
+
+        function updateVideoProgressDisplay(videoId) {
+            const video = videoData[videoId];
+            if (!video) {
+                console.error("Video data not found for:", videoId);
+                return;
+            }
+
+            const percentage = Math.min(100, (video.watched / video.duration) * 100);
+            const roundedPercentage = Math.round(percentage);
+            const minutesWatched = Math.round(video.watched / 60);
+
+            console.log(`Updating display for ${videoId}: ${percentage}% (${video.watched}s / ${video.duration}s)`);
+
+            // Update completion stat
+            const completionStat = document.getElementById(`${videoId}CompletionStat`);
+            if (completionStat) {
+                completionStat.textContent = `${roundedPercentage}% completed`;
+            }
+
+            // Update time watched
+            const timeWatched = document.getElementById(`${videoId}TimeWatched`);
+            if (timeWatched) {
+                timeWatched.textContent = `${minutesWatched} min watched`;
+            }
+
+            // Update course progress bar
+            const courseProgress = document.getElementById(`${videoId}CourseProgress`);
+            if (courseProgress) {
+                courseProgress.style.width = `${percentage}%`;
+            }
+
+            // Show/hide completion badge
+            const completionBadge = document.getElementById(`${videoId}CompletionBadge`);
+            if (completionBadge) {
+                if (video.completed) {
+                    completionBadge.style.display = 'block';
+                } else {
+                    completionBadge.style.display = 'none';
+                }
+            }
+        }
+
+        function updateAllVideoProgressDisplays() {
+            console.log("Updating all video progress displays");
+            Object.keys(videoData).forEach(videoId => {
+                updateVideoProgressDisplay(videoId);
+            });
+        }
+
+        // Initialize random progress for demonstration
+        function initializeDemoProgress() {
+            Object.keys(videoData).forEach(videoId => {
+                // Add random progress between 0-70% for demo
+                if (!videoData[videoId].completed) {
+                    const randomProgress = Math.floor(Math.random() * 70);
+                    videoData[videoId].watched = (randomProgress / 100) * videoData[videoId].duration;
+                }
+            });
+            saveVideoProgress();
+            updateAllVideoProgressDisplays();
+        }
+
+        // Uncomment to initialize with demo progress on first load
+        // if (!localStorage.getItem('videoProgress')) {
+        //     initializeDemoProgress();
+        // }
+    </script>
+</body>
+</html>
